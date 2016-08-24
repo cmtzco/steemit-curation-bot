@@ -1,16 +1,13 @@
 from piston.steem import Steem
 from subprocess import call
+from steemvars import *
 import os
 import sys
 import json
-
+	
 upvote_history = []
-my_subscriptions = ["cmtzco", "cryptohustlin", "alchemage", "reported",
-                    "Cryptohustlin", "Random-potato", "kennyskitchen",
-                    "cryptocameo", "carlidos", "knozaki2015",
-                    "e-steem", "princewahaj", "naifaz", "craig-grant", "dantheman",
-                    "shortcut", "endaksi1", "sauravrungta", "neoxian", "jasen.g1311",
-                    "btctoken", "zeartul", "timelapse", "cnmtz", "gochomoe"]
+
+
 
 def vote(puppet, wif_key):
     steem = Steem(wif=wif_key)

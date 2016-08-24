@@ -1,8 +1,8 @@
 from subprocess import call
+from steemvars import *
 import threading
 import time
 
-accounts = { "cmtzco" : { "posting_key" : "5JKLV1GkFsC7kVruxJNNb1TeH4AXvkyMtQyGJA9FRFVPvUorqyX" } }
 
 def run_bot(puppet, posting_key):
     call(["python3", "steem.py", puppet, posting_key])
