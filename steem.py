@@ -4,6 +4,8 @@ from steemvars import *
 import os
 import sys
 import json
+import random
+import threading
 	
 upvote_history = []
 
@@ -19,16 +21,30 @@ def vote(puppet, wif_key):
                 continue
             print("New post by @{} {}".format(c.author, url_builder(c)))
             try:
+                #print("Voting from {} account".format(puppet))
+                #c.vote(100, puppet)
+                #print("====> Upvoted")
+                #upvote_history.append(c.identifier)
                 print("Voting from {} account".format(puppet))
-                c.vote(100, puppet)
-                print("====> Upvoted")
+                curation_time = random.randint(840,1020)
+                print(c.identifier)
+                t = threading.Thread(target=curation_delay_vote, args=(wif_key, puppet, c.identifier, curation_time))
+                t.start()
                 upvote_history.append(c.identifier)
-            except BroadcastingError as e:
+            except Exception as e:
                 print("Upvoting failed...")
                 print("We have probably reached the upvote rate limit.")
                 print(str(e))
             
             
+
+def curation_delay_vote(wif_key, account_to_vote_with, identifier, time_to_wait):
+    print(time_to_wait)
+    time.sleep(time_to_wait)
+    steem = Steem(wif=wif_key)
+    steem.vote(identifier, 100, account_to_vote_with)
+    print("====> Upvoted")
+
 def url_builder(comment):
     return "https://steemit.com/%s/%s" % (comment.category, comment.identifier)
 
